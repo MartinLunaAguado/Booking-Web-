@@ -38,10 +38,10 @@
   ],
   "bookings": [
     {
-      "id": "1746283748347",
+      "id": "1746284868802",
       "userId": 1,
-      "eventId": "4",
-      "eventTitle": "Rust Conference 2021",
+      "eventId": "5",
+      "eventTitle": "Reunión Ingenieros TELECOS",
       "status": "confirmed"
     }
   ]

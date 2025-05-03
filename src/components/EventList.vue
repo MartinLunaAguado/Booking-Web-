@@ -1,18 +1,8 @@
 
 <template>
 <template v-if="error">
-<SectionCard>
-    <div class="space-y-4 items-center flex flex-col">
-        <div class="text-2xl font-medium text-red-500">
-            Could not load events. Please try again later.
-        </div>
-        <div>
-            <RoundButton @click="fetchEvents" class="bg-blue-500 text-white hover:bg-blue-600 focus:ring-blue-500 focus:ring-offset-blue-200 focus:ring-2 focus:ring-offset-2 rounded-md px-4 py-2">
-                Retry now
-            </RoundButton>
-        </div>
-    </div>
-</SectionCard>
+
+    <ErrorCard :retry="fetchEvents" >Could not load events. Please try again later. </ErrorCard>
 
 </template>
 <template v-else>
@@ -25,7 +15,7 @@
               :title="e.title"
               :when="e.date" 
               :description="e.description" 
-              @register="$emit('register',e)" />
+              @register="handleRegistration(e)" />
         </template>
       </template >
          <template v-else-if="!events.length">
@@ -43,11 +33,11 @@
 import {ref, onMounted} from 'vue'
 import EventCard from '@/components/EventCard.vue'
 import LoadingEventCard from '@/components/LoadingEventCard.vue'
-import SectionCard from './SectionCard.vue';
-import RoundButton from './RoundButton.vue';
+import ErrorCard from '@/components/ErrorCard.vue'
+import useBookings from '@/composables/useBookings';
 
-defineEmits(['register'])
 
+const { handleRegistration } = useBookings();
 const events = ref([]);
 const eventsLoading = ref(false);
 const error= ref(null);

@@ -1,17 +1,21 @@
  import { ref } from 'vue';
+import { extractRuntimeProps } from 'vue/compiler-sfc';
 
  
 const bookings = ref([]);
 const bookingsLoading = ref(false);
+const error = ref(null);
 
 
 
     const fetchBookings = async () => {
         bookingsLoading.value = true;
+        error.value = null;
         try {
           const response2 = await fetch('http://localhost:3001/bookings');
           bookings.value = await response2.json();
-        } catch (error) {
+        } catch (e) {
+            error.value = e;
           console.error('Error fetching events:', error);
         } finally {
           bookingsLoading.value = false;
@@ -90,6 +94,7 @@ export default function useBookings() {
     fetchBookings,
     handleRegistration,
     cancelBooking,
+    error,
   };
 }
 
